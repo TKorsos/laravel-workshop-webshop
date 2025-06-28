@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Http\Middleware\OnlyForGuests;
-use App\Http\Middleware\OnlyForUsers;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,25 +15,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/register', function () {
-    return view('register');
-})->middleware(OnlyForGuests::class);
-
-Route::post('/register', [UserController::class, 'registerProcess'])->middleware(OnlyForGuests::class);
-
-Route::get('/login', function () {
-    return view('login');
-})->middleware(OnlyForGuests::class);
-
-Route::post('/login', [UserController::class, 'loginProcess'])->middleware(OnlyForGuests::class);
+Route::get('/', function () {
+    return view('index');
+});
 
 
-Route::get('/profile', function () {
-    return view('profile');
-})->middleware(OnlyForUsers::class);
+Route::post('/register', function (Request $request) {
+    
+    try{
+        $validated = $request->validate([
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:4|max:20|confirmed'
+        ]);
+    } catch( ValidationException $e ) {
+        return response($e->errors());
+    }
 
-Route::get('/logout', function () {
-    Auth::logout();
 
-    return redirect()->to('login')->with('success', __('Logout was success!'));
-})->middleware(OnlyForUsers::class);
+});
