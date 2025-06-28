@@ -1,8 +1,0 @@
-{
-    "Success operation!": "Sikeres művelet!",
-    "Login failed!": "A belépés sikertelen!",
-    "The login was success!": "A belépés sikeres volt!",
-    "Logout was success!": "A kilépés sikeres volt!",
-    "The requested page can be accessed only for users!": "A megnyitni kívánt oldal csak belépett állapotban elérhető!",
-    "The requested page can be accessed only for guests!": "A megnyitni kívánt oldal csak kilépett állapotban elérhető!"
-}
